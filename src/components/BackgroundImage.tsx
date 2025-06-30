@@ -18,10 +18,13 @@ const BackgroundImage: React.FC<BackgroundImageProps> = ({
     <div 
       className={`min-h-screen bg-cover bg-center bg-no-repeat transition-all duration-1000 ease-in-out ${overlay ? 'bg-image-overlay' : ''} ${className}`}
       style={{
-        backgroundImage: `url(${imageUrl})`
+        backgroundImage: `url(${imageUrl})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed'
       }}
     >
-      <div className="min-h-screen flex items-center justify-center p-4">
+      <div className="min-h-screen flex items-center justify-center p-4 bg-black/20">
         {children}
       </div>
     </div>

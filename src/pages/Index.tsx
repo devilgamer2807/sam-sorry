@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import FloatingMessages from '@/components/FloatingMessages';
@@ -30,22 +31,34 @@ const Index = () => {
       "/lovable-uploads/c1adc657-1c48-4159-8fec-5d249e9f1198.png",
       "/lovable-uploads/ad12de82-b74b-4688-8753-dfec1eaf62dd.png", // Dark setting with hand gesture
       "/lovable-uploads/483ae6c9-2b91-423f-b05a-52c1ffd20174.png", // Black top smiling
-      "/lovable-uploads/abbc57cf-5430-4e54-9b3a-376b5737bd56.png" // Purple striped sweater
+      "/lovable-uploads/abbc57cf-5430-4e54-9b3a-376b5737bd56.png", // Purple striped sweater
+      "/lovable-uploads/23df8315-cc16-43ed-8bd1-c4896773eff7.png", // New blue dress
+      "/lovable-uploads/fe665ac5-2f6b-45af-804a-423afbaba359.png", // New yellow outfit
+      "/lovable-uploads/a9edce17-feaa-4932-a4d0-c7be2378c714.png", // New white outfit with graffiti
+      "/lovable-uploads/6f2b8d7f-a385-443b-b037-31f26f1504c6.png", // New yellow formal outfit
+      "/lovable-uploads/a085c794-77e3-4aaf-ba6d-f047147716d6.png", // New black casual outfit
+      "/lovable-uploads/a5d054ba-f6fd-4461-b6f3-cdca3867a885.png", // New checkered dress
+      "/lovable-uploads/20f4a55c-bb68-40a2-97ef-d06a6a5f4dde.png", // New purple sweater
+      "/lovable-uploads/86997a5b-f36e-43b4-ad69-cde39f05dede.png" // New black and white artistic
     ]
   };
 
   const sorryMessages = [
     "I'm Sorry 😔", "Please forgive me 🙏", "Maaf kar do na 🥺", "Sorry sorry sorry 😭",
     "I'm really sorry 💔", "Please don't be mad 🙏", "Galti ho gayi 😢", "Sorry yaar 😔",
-    "Bahut sorry 🥺", "Please smile 😊", "Don't be upset 💕", "I miss your smile 😊",
-    "You're the best 💖", "Sorry from heart ❤️", "Forgive me please 🙏", "I care about you 💕"
+    "Bahut sorry 🥺", "Please smile 😊", "Don't be upset 💕",
+    "You're the best 💖", "Sorry from heart ❤️", "Forgive me please 🙏"
   ];
 
+  // Generate 150 "bas bas jayda mushkariye mat haha!" messages
+  const bashBashMessages = Array(150).fill("bas bas jayda mushkariye mat haha!");
+
   const thankYouMessages = [
-    "Thank you so much hehe 😊", "You're amazing! 💖", "Love you yaar! 💕", "Best friend ever! 🌟",
-    "Thank you thank you! 🙏", "You're so sweet 😊", "Aww thank you! 💗", "You made my day! ✨",
-    "So grateful! 🥰", "You're wonderful! 🌸", "Thank you beautiful! 💖", "Sweetest person! 💕",
-    "You're a gem! 💎", "Thank you angel! 👼", "Best human! 🌟", "Love your heart! ❤️"
+    "Thank you so much hehe 😊", "You're amazing! 💖", "Love you yaar",
+    "Thank you thank you! 🙏", "Aww thank you! 💗",
+    "So grateful! 🥰", "You're wonderful! 🌸", "Thank you beautiful! 💖", "Sweetest person",
+    "You're a gem! 💎",
+    ...bashBashMessages
   ];
 
   const handleYesUpset = () => {
@@ -63,8 +76,8 @@ const Index = () => {
     setMessagesStopped(true);
   };
 
-  const handleForgivenessNo = () => {
-    // This is handled by the EscapingButton component
+  const handleContinueAfterSorry = () => {
+    setCurrentStage('forgiveness-question');
   };
 
   const handleForgivenessYes = () => {
@@ -125,9 +138,17 @@ const Index = () => {
                 I'm so sorry...
               </h1>
               {messagesStopped && (
-                <p className="text-xl text-gray-700 mb-8">
-                  Please forgive me, Sam. You mean so much to me 💕
-                </p>
+                <>
+                  <p className="text-xl text-gray-700 mb-8">
+                    Please forgive me, Sam.
+                  </p>
+                  <Button 
+                    onClick={handleContinueAfterSorry}
+                    className="bg-gradient-to-r from-pink-400 to-purple-400 hover:from-pink-500 hover:to-purple-500 text-white px-12 py-4 rounded-full text-xl font-semibold btn-hover-effect shadow-lg"
+                  >
+                    Continue 💕
+                  </Button>
+                </>
               )}
               {showFloatingMessages && !messagesStopped && (
                 <Button 
