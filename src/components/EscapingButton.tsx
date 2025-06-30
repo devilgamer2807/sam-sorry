@@ -11,7 +11,7 @@ interface EscapingButtonProps {
 const EscapingButton: React.FC<EscapingButtonProps> = ({ 
   children, 
   onFinalClick, 
-  escapeAttempts = 100, // Set to a high number so it's essentially unclickable
+  escapeAttempts = 100,
   className = ""
 }) => {
   const [attempts, setAttempts] = useState(0);
@@ -27,35 +27,46 @@ const EscapingButton: React.FC<EscapingButtonProps> = ({
     };
   };
 
-  const handleMouseEnter = () => {
-    // Always move the button on hover, making it unclickable
+  const moveButton = () => {
     const newPosition = getRandomPosition();
     setPosition(newPosition);
     setAttempts(prev => prev + 1);
   };
 
+  const handleMouseEnter = () => {
+    moveButton();
+  };
+
   const handleClick = (e: React.MouseEvent) => {
-    // Prevent any click from working
     e.preventDefault();
     e.stopPropagation();
-    
-    // Move the button even if somehow clicked
-    const newPosition = getRandomPosition();
-    setPosition(newPosition);
+    moveButton();
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    moveButton();
+  };
+
+  const handlePointerDown = (e: React.PointerEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    moveButton();
   };
 
   return (
     <button
       ref={buttonRef}
-      className={`transition-all duration-100 ease-out ${className}`} // Faster transition
+      className={`transition-all duration-75 ease-out ${className}`}
       style={{
         transform: `translate(${position.x}px, ${position.y}px)`,
-        pointerEvents: 'auto' // Keep pointer events but prevent actual clicking
+        pointerEvents: 'auto'
       }}
       onMouseEnter={handleMouseEnter}
       onClick={handleClick}
-      onPointerDown={handleClick} // Prevent pointer down as well
-      onTouchStart={handleClick} // Prevent touch start
+      onPointerDown={handlePointerDown}
+      onTouchStart={handleTouchStart}
     >
       {children}
     </button>
