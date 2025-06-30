@@ -11,7 +11,7 @@ interface EscapingButtonProps {
 const EscapingButton: React.FC<EscapingButtonProps> = ({ 
   children, 
   onFinalClick, 
-  escapeAttempts = 5,
+  escapeAttempts = 100, // Set to a high number so it's essentially unclickable
   className = ""
 }) => {
   const [attempts, setAttempts] = useState(0);
@@ -19,62 +19,43 @@ const EscapingButton: React.FC<EscapingButtonProps> = ({
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   const getRandomPosition = () => {
-    const maxX = Math.min(window.innerWidth - 200, 400);
-    const maxY = Math.min(window.innerHeight - 100, 300);
+    const maxX = Math.min(window.innerWidth - 200, 600);
+    const maxY = Math.min(window.innerHeight - 100, 400);
     return {
       x: (Math.random() - 0.5) * maxX,
       y: (Math.random() - 0.5) * maxY
     };
   };
 
-  const showRandomMessage = () => {
-    const messages = [
-      "Chalak mat banniye... maaf kar dijiye na 🙏🥺",
-      "Itne chalak mat banniye... please 🙏",
-      "Arrey yaar... maaf kar do na 🥺",
-      "Please Sam... forgive me 💕"
-    ];
-    const randomMessage = messages[Math.floor(Math.random() * messages.length)];
-    
-    // Create a temporary message element
-    const messageDiv = document.createElement('div');
-    messageDiv.textContent = randomMessage;
-    messageDiv.className = 'fixed z-50 bg-pink-100 text-pink-800 px-4 py-2 rounded-lg text-sm animate-bounce pointer-events-none';
-    messageDiv.style.left = Math.random() * (window.innerWidth - 300) + 'px';
-    messageDiv.style.top = Math.random() * (window.innerHeight - 100) + 'px';
-    
-    document.body.appendChild(messageDiv);
-    
-    // Remove message after 2 seconds
-    setTimeout(() => {
-      document.body.removeChild(messageDiv);
-    }, 2000);
-  };
-
   const handleMouseEnter = () => {
-    if (attempts < escapeAttempts) {
-      const newPosition = getRandomPosition();
-      setPosition(newPosition);
-      setAttempts(prev => prev + 1);
-      showRandomMessage();
-    }
+    // Always move the button on hover, making it unclickable
+    const newPosition = getRandomPosition();
+    setPosition(newPosition);
+    setAttempts(prev => prev + 1);
   };
 
-  const handleClick = () => {
-    if (attempts >= escapeAttempts) {
-      onFinalClick();
-    }
+  const handleClick = (e: React.MouseEvent) => {
+    // Prevent any click from working
+    e.preventDefault();
+    e.stopPropagation();
+    
+    // Move the button even if somehow clicked
+    const newPosition = getRandomPosition();
+    setPosition(newPosition);
   };
 
   return (
     <button
       ref={buttonRef}
-      className={`transition-all duration-300 ease-out ${className}`}
+      className={`transition-all duration-100 ease-out ${className}`} // Faster transition
       style={{
-        transform: `translate(${position.x}px, ${position.y}px)`
+        transform: `translate(${position.x}px, ${position.y}px)`,
+        pointerEvents: 'auto' // Keep pointer events but prevent actual clicking
       }}
       onMouseEnter={handleMouseEnter}
       onClick={handleClick}
+      onPointerDown={handleClick} // Prevent pointer down as well
+      onTouchStart={handleClick} // Prevent touch start
     >
       {children}
     </button>

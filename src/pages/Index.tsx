@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import FloatingMessages from '@/components/FloatingMessages';
@@ -54,10 +53,9 @@ const Index = () => {
   const bashBashMessages = Array(150).fill("bas bas jayda mushkariye mat haha!");
 
   const thankYouMessages = [
-    "Thank you so much hehe 😊", "You're amazing! 💖", "Love you yaar",
+    "Thank you so much hehe 😊", "You're amazing! 💖",
     "Thank you thank you! 🙏", "Aww thank you! 💗",
-    "So grateful! 🥰", "You're wonderful! 🌸", "Thank you beautiful! 💖", "Sweetest person",
-    "You're a gem! 💎",
+    "You're wonderful! 🌸", "You're a gem! 💎",
     ...bashBashMessages
   ];
 
@@ -90,6 +88,33 @@ const Index = () => {
   const handleThankYouStop = () => {
     setShowFloatingMessages(false);
     setCurrentStage('gallery');
+  };
+
+  const handleBackToInitial = () => {
+    setCurrentStage('initial');
+    setShowFloatingMessages(false);
+    setShowHearts(false);
+    setMessagesStopped(false);
+  };
+
+  const handleBackToSorry = () => {
+    setCurrentStage('sorry-animation');
+    setShowFloatingMessages(false);
+    setMessagesStopped(true);
+  };
+
+  const handleBackToNotUpset = () => {
+    setCurrentStage('not-upset');
+  };
+
+  const handleBackToForgiveness = () => {
+    setCurrentStage('forgiveness-question');
+  };
+
+  const handleBackToThankYou = () => {
+    setCurrentStage('thank-you');
+    setShowFloatingMessages(false);
+    setShowHearts(false);
   };
 
   useEffect(() => {
@@ -134,6 +159,12 @@ const Index = () => {
         return (
           <BackgroundImage imageUrl={samPhotos.sorry}>
             <div className="text-center bg-white/90 backdrop-blur-sm rounded-3xl p-12 shadow-2xl max-w-2xl mx-auto">
+              <Button 
+                onClick={handleBackToInitial}
+                className="absolute top-4 left-4 bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-full text-sm"
+              >
+                ← Back
+              </Button>
               <h1 className="text-6xl font-dancing text-red-500 mb-8 animate-pulse-heart">
                 I'm so sorry...
               </h1>
@@ -166,6 +197,12 @@ const Index = () => {
         return (
           <BackgroundImage imageUrl={samPhotos.notUpset}>
             <div className="text-center bg-white/90 backdrop-blur-sm rounded-3xl p-12 shadow-2xl max-w-2xl mx-auto animate-gentle-sway">
+              <Button 
+                onClick={handleBackToInitial}
+                className="absolute top-4 left-4 bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-full text-sm"
+              >
+                ← Back
+              </Button>
               <h1 className="text-4xl font-caveat text-gradient mb-8 leading-relaxed">
                 Toh ghussa kijiye na...
               </h1>
@@ -186,6 +223,12 @@ const Index = () => {
         return (
           <BackgroundImage imageUrl={samPhotos.forgiveness}>
             <div className="text-center bg-white/90 backdrop-blur-sm rounded-3xl p-12 shadow-2xl max-w-2xl mx-auto">
+              <Button 
+                onClick={handleBackToNotUpset}
+                className="absolute top-4 left-4 bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-full text-sm"
+              >
+                ← Back
+              </Button>
               <h1 className="text-4xl font-dancing text-gradient mb-8 leading-relaxed">
                 Mujhe maaf kar dijiye na...
               </h1>
@@ -214,6 +257,12 @@ const Index = () => {
         return (
           <BackgroundImage imageUrl={samPhotos.thankYou}>
             <div className="text-center bg-white/90 backdrop-blur-sm rounded-3xl p-12 shadow-2xl max-w-2xl mx-auto">
+              <Button 
+                onClick={handleBackToForgiveness}
+                className="absolute top-4 left-4 bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-full text-sm"
+              >
+                ← Back
+              </Button>
               <h1 className="text-5xl font-dancing text-gradient mb-8 animate-pulse-heart">
                 Thank You! 💖
               </h1>
@@ -235,6 +284,12 @@ const Index = () => {
       case 'gallery':
         return (
           <div className="min-h-screen bg-gradient-sam p-8">
+            <Button 
+              onClick={handleBackToThankYou}
+              className="absolute top-4 left-4 bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-full text-sm z-10"
+            >
+              ← Back
+            </Button>
             <div className="max-w-6xl mx-auto text-center">
               <h1 className="text-5xl font-dancing text-gradient mb-12">
                 Beautiful Memories with Sam 💕
