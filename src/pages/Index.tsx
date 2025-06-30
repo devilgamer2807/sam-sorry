@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import FloatingMessages from '@/components/FloatingMessages';
@@ -14,13 +13,25 @@ const Index = () => {
   const [showHearts, setShowHearts] = useState(false);
   const [messagesStopped, setMessagesStopped] = useState(false);
 
-  // Placeholder images - users can replace these with Sam's photos
-  const backgrounds = {
-    initial: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=1920&h=1080&fit=crop",
-    sorry: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1920&h=1080&fit=crop",
-    notUpset: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1920&h=1080&fit=crop",
-    forgiveness: "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?w=1920&h=1080&fit=crop",
-    thankYou: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=1920&h=1080&fit=crop"
+  // Sam's photos for backgrounds and gallery
+  const samPhotos = {
+    initial: "/lovable-uploads/99545697-0603-4534-a30e-41928b90afc4.png", // Purple sparkly top
+    sorry: "/lovable-uploads/4f43acb3-26c0-4d3f-9b13-2182f9797e69.png", // White polo shirt
+    notUpset: "/lovable-uploads/c5fcde22-93fc-4ac5-bffd-bfac4b3e3f54.png", // Dark floral top
+    forgiveness: "/lovable-uploads/a837ba2a-7e92-46bd-aff0-6c171ee96cf7.png", // Casual white top
+    thankYou: "/lovable-uploads/c1adc657-1c48-4159-8fec-5d249e9f1198.png", // Outdoor rooftop photo
+    gallery: [
+      "/lovable-uploads/99545697-0603-4534-a30e-41928b90afc4.png",
+      "/lovable-uploads/4f43acb3-26c0-4d3f-9b13-2182f9797e69.png",
+      "/lovable-uploads/c5fcde22-93fc-4ac5-bffd-bfac4b3e3f54.png",
+      "/lovable-uploads/d9bed0c6-773b-4d07-af0e-c06a4ccb0730.png", // Black and white with hearts
+      "/lovable-uploads/a837ba2a-7e92-46bd-aff0-6c171ee96cf7.png",
+      "/lovable-uploads/6c294c89-cf50-444a-93dc-2d9aff1fdae8.png", // Black and white portrait
+      "/lovable-uploads/c1adc657-1c48-4159-8fec-5d249e9f1198.png",
+      "/lovable-uploads/ad12de82-b74b-4688-8753-dfec1eaf62dd.png", // Dark setting with hand gesture
+      "/lovable-uploads/483ae6c9-2b91-423f-b05a-52c1ffd20174.png", // Black top smiling
+      "/lovable-uploads/abbc57cf-5430-4e54-9b3a-376b5737bd56.png" // Purple striped sweater
+    ]
   };
 
   const sorryMessages = [
@@ -80,7 +91,7 @@ const Index = () => {
     switch (currentStage) {
       case 'initial':
         return (
-          <BackgroundImage imageUrl={backgrounds.initial}>
+          <BackgroundImage imageUrl={samPhotos.initial}>
             <div className="text-center bg-white/90 backdrop-blur-sm rounded-3xl p-12 shadow-2xl max-w-2xl mx-auto animate-gentle-sway">
               <h1 className="text-5xl font-dancing text-gradient mb-8 leading-tight">
                 Hey Sam, my friend...
@@ -108,7 +119,7 @@ const Index = () => {
 
       case 'sorry-animation':
         return (
-          <BackgroundImage imageUrl={backgrounds.sorry}>
+          <BackgroundImage imageUrl={samPhotos.sorry}>
             <div className="text-center bg-white/90 backdrop-blur-sm rounded-3xl p-12 shadow-2xl max-w-2xl mx-auto">
               <h1 className="text-6xl font-dancing text-red-500 mb-8 animate-pulse-heart">
                 I'm so sorry...
@@ -132,7 +143,7 @@ const Index = () => {
 
       case 'not-upset':
         return (
-          <BackgroundImage imageUrl={backgrounds.notUpset}>
+          <BackgroundImage imageUrl={samPhotos.notUpset}>
             <div className="text-center bg-white/90 backdrop-blur-sm rounded-3xl p-12 shadow-2xl max-w-2xl mx-auto animate-gentle-sway">
               <h1 className="text-4xl font-caveat text-gradient mb-8 leading-relaxed">
                 Toh ghussa kijiye na...
@@ -152,7 +163,7 @@ const Index = () => {
 
       case 'forgiveness-question':
         return (
-          <BackgroundImage imageUrl={backgrounds.forgiveness}>
+          <BackgroundImage imageUrl={samPhotos.forgiveness}>
             <div className="text-center bg-white/90 backdrop-blur-sm rounded-3xl p-12 shadow-2xl max-w-2xl mx-auto">
               <h1 className="text-4xl font-dancing text-gradient mb-8 leading-relaxed">
                 Mujhe maaf kar dijiye na...
@@ -180,7 +191,7 @@ const Index = () => {
 
       case 'thank-you':
         return (
-          <BackgroundImage imageUrl={backgrounds.thankYou}>
+          <BackgroundImage imageUrl={samPhotos.thankYou}>
             <div className="text-center bg-white/90 backdrop-blur-sm rounded-3xl p-12 shadow-2xl max-w-2xl mx-auto">
               <h1 className="text-5xl font-dancing text-gradient mb-8 animate-pulse-heart">
                 Thank You! 💖
@@ -203,17 +214,17 @@ const Index = () => {
       case 'gallery':
         return (
           <div className="min-h-screen bg-gradient-sam p-8">
-            <div className="max-w-4xl mx-auto text-center">
+            <div className="max-w-6xl mx-auto text-center">
               <h1 className="text-5xl font-dancing text-gradient mb-12">
                 Beautiful Memories with Sam 💕
               </h1>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-                {[backgrounds.initial, backgrounds.notUpset, backgrounds.forgiveness, backgrounds.thankYou].map((img, index) => (
-                  <div key={index} className="bg-white rounded-2xl p-4 shadow-xl transform hover:scale-105 transition-all duration-300">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                {samPhotos.gallery.map((img, index) => (
+                  <div key={index} className="bg-white rounded-2xl p-4 shadow-xl transform hover:scale-105 transition-all duration-300 hover:shadow-2xl">
                     <img 
                       src={img} 
-                      alt={`Memory ${index + 1}`}
-                      className="w-full h-64 object-cover rounded-xl mb-4"
+                      alt={`Beautiful memory with Sam ${index + 1}`}
+                      className="w-full h-80 object-cover rounded-xl mb-4"
                     />
                     <p className="text-lg font-caveat text-gray-700">
                       Beautiful Memory #{index + 1} 💖
